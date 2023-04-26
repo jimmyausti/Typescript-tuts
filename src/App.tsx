@@ -303,9 +303,85 @@ class Bands {
 const myBands = new Bands()
 myBands.data = ['Pink Floyd', 'Led Zep']
 myBands.data = [...myBands.data, 'Rush']
-cl(myBands.data)
+// TODO cl(myBands.data)
 
 //////////////////////////////////////////////////////////////////////////!
+
+
+//* Index Signatures & keyof Assertions 
+
+//! Index Signatures
+
+interface TransactionObj {
+  [index: string]: number
+  Pizza: number,
+  Books: number
+}
+
+const todaysTransactions: TransactionObj = {
+  Pizza: -10,
+  Books: -5,
+  Job: 50
+}
+//TODO cl(todaysTransactions.Pizza)
+let prop: string = 'Pizza'
+//TODO cl(todaysTransactions[prop]) //same as before!
+
+///////////////////////////////////////////////////////////////
+
+//! keyof Assertions
+
+interface Student {
+  //[key: string]: string | number | number[] | undefined
+  name: string;
+  GPA: number;
+  classes?: number[];
+}
+
+const student: Student = {
+  name: 'Jimmy',
+  GPA: 3.4,
+  classes: [100, 200]
+}
+
+
+for (const key in student) {
+  // cl(`${key}: ${student[key as keyof Student]}`)
+}
+
+Object.keys(student).map(key => {
+  // cl(student[key as keyof typeof student])
+})
+
+const logStudentKey = (student: Student, key: keyof Student): void => {
+  cl(`Student ${key}: ${student[key]}`)
+}
+
+logStudentKey(student, 'name')
+
+
+///////////////////////////////////////////////////////////////
+
+// interface Incomes {
+//   [key: string]: number
+// }
+
+type Streams = 'salary' | 'bonus' | 'sidehustle'
+
+type Incomes = Record<Streams, number>
+
+const monthlyIncomes: Incomes = {
+  salary: 500,
+  bonus: 100,
+  sidehustle: 250
+}
+
+for (const revenue in monthlyIncomes) {
+  cl(monthlyIncomes[revenue as keyof Incomes])
+}
+
+
+
 
 
   return (
